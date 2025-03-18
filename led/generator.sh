@@ -99,6 +99,7 @@ mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 cp ${task_path}/static/pwm.c ${desc_path}
 cp ${task_path}/static/STM32F3_FlashController.cs ${desc_path}
 cp ${task_path}/static/STM32F3_RCC.cs ${desc_path}
+cp ${task_path}/static/STM32F3_EXTI.cs ${desc_path}
 cp ${task_path}/static/stm32f334.repl ${desc_path}
 cp ${task_path}/static/stm32f334R8_nucleo.repl ${desc_path}
 

@@ -412,7 +412,12 @@ function simulate {
 function generate_cmake_bin {
 	cd $user_task_path
 	cmake -S . -B build
-	cmake --build build
+	cmake --build build 2> error_msg
+	RET_timeout=$?
+	if [ "$RET_timeout" -ne 0 ]
+	then
+		exit_and_save_results $FAILURE_USERANALYZE
+	fi
 }
 
 function run_renode {

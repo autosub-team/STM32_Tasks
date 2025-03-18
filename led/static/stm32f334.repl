@@ -39,7 +39,7 @@ pwr: Miscellaneous.STM32_PWR @ sysbus 0x40007000
 crc: CRC.STM32_CRC @ sysbus 0x40023000
     series: STM32Series.F4
 
-exti: IRQControllers.STM32F4_EXTI @ sysbus 0x40010400
+exti: IRQControllers.STM32F3_EXTI @ sysbus 0x40010400
     numberOfOutputLines: 24
     [0-4] -> nvic@[6-10]
     [5-9] -> nvicInput23@[0-4]

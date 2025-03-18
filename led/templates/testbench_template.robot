@@ -13,6 +13,7 @@ ${simulation_cycles}  {{SIMCYCLES}}
 Create Nucleo Board
     
     Execute Command          include @${CURDIR}/STM32F3_RCC.cs
+    Execute Command          include @${CURDIR}/STM32F3_EXTI.cs
     Execute Command          include @${CURDIR}/STM32F3_FlashController.cs
 
     Execute Command          $bin = @${CURDIR}/build/stm32-pwm.elf
@@ -28,14 +29,14 @@ Create Nucleo Board
 
 *** Test Cases ***
 
-LED Tester Assert Is Blinking Should Precisely Pause Emulation
-    [Tags]                   instructions_counting
-    Create Nucleo Board
-
-    Assert LED Is Blinking   testDuration=5  onDuration=1  offDuration=1  pauseEmulation=true
-
-#LED Tester Assert Duty Cycle Should Precisely Pause Emulation
+#LED Tester Assert Is Blinking Should Precisely Pause Emulation
 #    [Tags]                   instructions_counting
 #    Create Nucleo Board
 #
-#    Assert LED Duty Cycle    testDuration=5  expectedDutyCycle=0.5  pauseEmulation=true
+#    Assert LED Is Blinking   testDuration=5  onDuration=1  offDuration=1  pauseEmulation=true
+
+LED Tester Assert Duty Cycle Should Precisely Pause Emulation
+    [Tags]                   instructions_counting
+    Create Nucleo Board
+
+    Assert LED Duty Cycle    testDuration=0.001  expectedDutyCycle=0.25  tolerance=0
