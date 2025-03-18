@@ -1,6 +1,6 @@
 [submodule "_backend_interfaces/STM32CubeF3"]
-	path = _backend_interfaces/STM32CubeF3
+	path = _backend_interfaces/support_files/STM32CubeF3/STM32CubeF3
 	url = https://github.com/STMicroelectronics/STM32CubeF3.git
 [submodule "_backend_interfaces/stm32-cmake"]
-	path = _backend_interfaces/stm32-cmake
+	path = _backend_interfaces/support_files/stm32-cmake/stm32-cmake
 	url = https://github.com/ObKo/stm32-cmake.git

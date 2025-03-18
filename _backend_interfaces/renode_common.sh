@@ -36,7 +36,7 @@ desc_path="$autosub_path/users/${user_id}/Task${task_nr}/desc"
 user_task_path="$autosub_path/users/${user_id}/Task${task_nr}"
 
 # testbench file
-testbench=${task_name}_tb_${user_id}_Task${task_nr}.vhdl
+testbench=${task_name}_tb_${user_id}_Task${task_nr}.robot
 
 # name of testbench entity
 testbench_ent=${task_name}_tb
@@ -460,7 +460,7 @@ function exit_and_save_results {
 	if [ -f $user_task_path/$testbench ]
 	then
 		src=$user_task_path/$testbench
-		tgt=$user_submission_path/test_results/${task_name}_tb_${user_id}_Task${task_nr}.vhdl
+		tgt=$user_submission_path/test_results/${task_name}_tb_${user_id}_Task${task_nr}.robot
 		cp $src $tgt
 	fi
 

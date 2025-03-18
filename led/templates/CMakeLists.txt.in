@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
+#set(STM32_TOOLCHAIN_PATH $BACKEND_INTERFACES/support_files/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi)
 set(STM32_TARGET_TRIPLET arm-none-eabi)
-set(STM32_CUBE_F3_PATH $BACKEND_INTERFACES/STM32CubeF3)
+set(STM32_CUBE_F3_PATH $BACKEND_INTERFACES/support_files/STM32CubeF3)
 
-set(CMAKE_TOOLCHAIN_FILE $BACKEND_INTERFACES/stm32-cmake/cmake/stm32_gcc.cmake)
+set(CMAKE_TOOLCHAIN_FILE $BACKEND_INTERFACES/support_files/stm32-cmake/cmake/stm32_gcc.cmake)
 
 project(stm32-ll C ASM)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)

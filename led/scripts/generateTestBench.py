@@ -16,25 +16,32 @@ from jinja2 import FileSystemLoader, Environment
 
 #################################################################
 
-taskParameters=int(sys.argv[1])
-random_tag=sys.argv[2]
-params={}
+taskParameters = int(sys.argv[1])
+random_tag = sys.argv[2]
+params = {}
 
-simCycles = random.randrange(5,30)
+simCycles = random.randrange(5, 30)
 periodClks = taskParameters >> 18
-dutyClks = taskParameters & (2**18-1)
+dutyClks = taskParameters & (2**18 - 1)
 
 #########################################
 # SET PARAMETERS FOR TESTBENCH TEMPLATE #
 #########################################
-params.update({"random_tag":random_tag,"PERIODCLKS":periodClks,"DUTYCLKS":dutyClks,"SIMCYCLES":simCycles})
+params.update(
+    {
+        "random_tag": random_tag,
+        "PERIODCLKS": periodClks,
+        "DUTYCLKS": dutyClks,
+        "SIMCYCLES": simCycles,
+    }
+)
 
 ###########################
 # FILL TESTBENCH TEMPLATE #
 ###########################
 env = Environment()
-env.loader = FileSystemLoader('templates/')
-filename ="testbench_template.vhdl"
+env.loader = FileSystemLoader("templates/")
+filename = "testbench_template.robot"
 template = env.get_template(filename)
 template = template.render(params)
 
