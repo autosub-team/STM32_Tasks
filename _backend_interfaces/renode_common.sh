@@ -413,7 +413,44 @@ function generate_cmake_bin {
 	cd $user_task_path
 	cmake -S . -B build
 	cmake --build build
-	exit_and_save_results $FAILURE_SIM
+}
+
+function run_renode {
+	cd $user_task_path
+
+	# set virtual memory limit to 500 MiB
+	#ulimit -v $((500*1024))
+
+	# start simulation, output is written to a file called transcript, no need
+	# to output the error messages to stderr, as they are also in the transcript
+	#timeout $simulation_timeout bash -c "renode-test pwm_tb_1_Task1.robot"  #1>&2 2> /dev/null
+	renode-test pwm_tb_1_Task1.robot
+	RET_timeout=$?
+
+	# check if simulation timed out:
+	if [ "$RET_timeout" -eq 124 ] # timeout exits 124 if it had to kill the process. Probably the simulation has crashed.
+	then
+		# messagt to tasks.stdout
+		echo "Task ${task_nr} simulation timeout for user ${user_id}!"
+
+		# message to error_msg for user
+		echo "The simulation of your design timed out. This is not supposed to happen. Check your design." > error_msg
+
+		#attach warnings & errors, maybe they help user
+		#cat vsim.log | grep '\*\* Error' >> error_msg
+		#cat /tmp/$USER/tmp_Task${task_nr}_User${user_id} | grep '\*\* Warning' >> error_msg
+		#cat vsim.log | grep '\*\* Warning' >> error_msg
+		#########################################################################
+
+		exit_and_save_results $FAILURE_SIM
+	fi
+
+	if [ "$RET_timeout" -eq 1 ]
+	then
+		exit_and_save_results $FAILURE_SIM
+	fi
+
+	exit_and_save_results $SUCCESS_SIM
 }
 
 #

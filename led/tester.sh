@@ -41,6 +41,8 @@ prepare_test
 
 generate_cmake_bin
 
+run_renode
+
 #taskfiles_analyze
 
 #userfiles_analyze

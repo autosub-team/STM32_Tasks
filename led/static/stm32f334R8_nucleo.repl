@@ -1,0 +1,10 @@
+using "./stm32f334.repl"
+
+UserButton: Miscellaneous.Button @ gpioPortC
+    -> gpioPortC@13
+
+UserLED: Miscellaneous.LED @ gpioPortA
+
+gpioPortA:
+    5 -> UserLED@0
+   

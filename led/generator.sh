@@ -97,6 +97,12 @@ mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 
 #copy static files to user's description folder
 cp ${task_path}/static/pwm.c ${desc_path}
+cp ${task_path}/static/STM32F3_FlashController.cs ${desc_path}
+cp ${task_path}/static/STM32F3_RCC.cs ${desc_path}
+cp ${task_path}/static/stm32f334.repl ${desc_path}
+cp ${task_path}/static/stm32f334R8_nucleo.repl ${desc_path}
+
+#Configure CMakeLists file
 TASK_NAME=$task_name BACKEND_INTERFACES=$backend_interfaces_path envsubst '$BACKEND_INTERFACES, $TASK_NAME' <${task_path}/templates/CMakeLists.txt.in >${desc_path}/CMakeLists.txt
 
 #for exam
