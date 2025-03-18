@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.16)
+
+set(STM32_TARGET_TRIPLET arm-none-eabi)
+set(STM32_CUBE_F3_PATH $BACKEND_INTERFACES/STM32CubeF3)
+
+set(CMAKE_TOOLCHAIN_FILE $BACKEND_INTERFACES/stm32-cmake/cmake/stm32_gcc.cmake)
+
+project(stm32-ll C ASM)
+set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+
+
+
+find_package(CMSIS COMPONENTS STM32F3 REQUIRED)
+find_package(HAL COMPONENTS STM32F3 LL_RCC LL_GPIO REQUIRED)
+
+# STM32F334R8
+add_executable(stm32-$TASK_NAME $TASK_NAME.c)
+target_link_libraries(stm32-$TASK_NAME
+    HAL::STM32::F3::LL_RCC
+    HAL::STM32::F3::LL_GPIO
+    CMSIS::STM32::F334R8
+    STM32::NoSys 
+)
+#stm32_print_size_of_target(stm32-)
+
