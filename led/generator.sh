@@ -96,6 +96,7 @@ rm -f desc_${user_id}_Task${task_nr}.out
 mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 
 #copy static files to user's description folder
+cp ${task_path}/static/pwm.c ${desc_path}
 TASK_NAME=$task_name BACKEND_INTERFACES=$backend_interfaces_path envsubst '$BACKEND_INTERFACES, $TASK_NAME' <${task_path}/templates/CMakeLists.txt.in >${desc_path}/CMakeLists.txt
 
 #for exam

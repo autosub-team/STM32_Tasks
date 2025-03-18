@@ -413,6 +413,7 @@ function generate_cmake_bin {
 	cd $user_task_path
 	cmake -S . -B build
 	cmake --build build
+	exit_and_save_results $FAILURE_SIM
 }
 
 #
