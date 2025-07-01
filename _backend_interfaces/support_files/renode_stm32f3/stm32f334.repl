@@ -108,6 +108,10 @@ rtc: Timers.STM32F4_RTC @ sysbus 0x40002800
 rcc: Miscellaneous.STM32F3_RCC @ sysbus 0x40021000
     rtcPeripheral: rtc
 
+adc: Analog.STM32F3_ADC @ sysbus 0x50000000
+    referenceVoltage: 3.3
+    externalEventFrequency: 1000000
+
 timer1: Timers.STM32_Timer @ sysbus 0x40012C00
     -> nvic@25
     frequency: 10000000
