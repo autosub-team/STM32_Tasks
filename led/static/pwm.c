@@ -2,10 +2,8 @@
 #include <stm32f3xx_ll_cortex.h>
 #include <stm32f3xx_ll_rcc.h>
 
-// STM32F334R8 green led - PA5
 #define LED_PORT                GPIOA
 #define LED_PIN                 LL_GPIO_PIN_5
-#define LED_PORT_CLK_ENABLE()   { RCC->AHBENR |= RCC_AHBENR_GPIODEN; }
 
 void SysTick_Handler(void)
 {
@@ -19,7 +17,7 @@ void SysTick_Handler(void)
 
 void initGPIO()
 {
-    LED_PORT_CLK_ENABLE();
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
 
     LL_GPIO_SetPinMode(LED_PORT, LED_PIN, LL_GPIO_MODE_OUTPUT);
     LL_GPIO_SetPinOutputType(LED_PORT, LED_PIN, LL_GPIO_OUTPUT_PUSHPULL);

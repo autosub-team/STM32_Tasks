@@ -429,7 +429,7 @@ function run_renode {
 	# start simulation, output is written to a file called transcript, no need
 	# to output the error messages to stderr, as they are also in the transcript
 	#timeout $simulation_timeout bash -c "renode-test pwm_tb_1_Task1.robot"  #1>&2 2> /dev/null
-	renode-test pwm_tb_1_Task1.robot
+	renode-test ${testbench} -r renode
 	RET_timeout=$?
 
 	# check if simulation timed out:
@@ -452,7 +452,7 @@ function run_renode {
 
 	if [ "$RET_timeout" -eq 1 ]
 	then
-		python3 $support_files_path/renode_result.py robot_output.xml error_msg
+		python3 $support_files_path/renode_result.py renode/robot_output.xml error_msg
 		exit_and_save_results $FAILURE_SIM
 	fi
 

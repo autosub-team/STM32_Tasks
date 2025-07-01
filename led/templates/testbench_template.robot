@@ -13,29 +13,42 @@ ${simulation_cycles}            {{SIMCYCLES}}
 
 
 *** Test Cases ***
-LED Tester Assert Duty Cycle Should Precisely Pause Emulation
+Test for correct Duty Cycle
     [Tags]    sels
     Create Nucleo Board
 
-    Assert LED Duty Cycle
-    ...    testDuration=${simulation_cycles}
-    ...    expectedDutyCycle=${${desired_duty_cycle_clks} / ${desired_period_clks}}
-    ...    tolerance=${0.005}
-    ...    pauseEmulation=true
+    #Execute Command    sysbus SetHookBeforePeripheralWrite sysbus.gpioPortA "print 'Offset:', offset, ', Value:', value"
+
+    Execute Command          gpioPortA.pt Reset
+    Execute Command          pause
+    Execute Command          emulation RunFor "5"
+    Start Emulation
+    ${hp}=  Execute Command  gpioPortA.pt HighPercentage
+    ${ht}=  Execute Command  gpioPortA.pt HighTicks
+    ${hpn}=  Convert To Number  ${hp}
+    Should Be Equal Within Range  ${${desired_duty_cycle_clks} / ${desired_period_clks} * 100}  ${hpn}  1
 
 
 *** Keywords ***
 Create Nucleo Board
-    Execute Command    include @${CURDIR}/STM32F3_RCC.cs
-    Execute Command    include @${CURDIR}/STM32F3_EXTI.cs
-    Execute Command    include @${CURDIR}/STM32F3_FlashController.cs
+    Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_RCC.cs
+    Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_EXTI.cs
+    Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_FlashController.cs
 
     Execute Command    $bin = @${CURDIR}/build/stm32-pwm.elf
 
     Execute Command    using sysbus
     Execute Command    mach create "STM32F334R8-Nucleo"
-    Execute Command    machine LoadPlatformDescription @${CURDIR}/stm32f334R8_nucleo.repl
+    Execute Command    machine LoadPlatformDescription @${CURDIR}/renode/renode_stm32f3/stm32f334R8_nucleo.repl
+
+    Execute Command          machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortA 5"
+    Execute Command          machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> pt@0 }"
 
     Execute Command    sysbus LoadELF $bin
 
-    Create LED Tester    sysbus.gpioPortA.UserLED    defaultTimeout=2
+Should Be Equal Within Range
+    [Arguments]              ${value0}  ${value1}  ${range}
+
+    ${diff}=                 Evaluate  abs(${value0} - ${value1})
+
+    Should Be True           ${diff} <= ${range}  msg="Duty Cycle out of range. Expected: ${value0} vs Acutal: ${value1}"

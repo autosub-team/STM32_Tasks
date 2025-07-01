@@ -27,8 +27,12 @@ language=$6
 autosub_path=$(pwd)
 # root path of the task itself
 task_path=$(readlink -f $0|xargs dirname)
+# path for user task
+user_task_path="${autosub_path}/users/${user_id}/Task${task_nr}"
 # path for all the files that describe the created path
-desc_path="${autosub_path}/users/${user_id}/Task${task_nr}/desc"
+desc_path="${user_task_path}/desc"
+# path for all renode related files
+renode_path="${user_task_path}/renode"
 
 # root path of the task itself
 task_path=$(readlink -f $0|xargs dirname)
@@ -50,6 +54,11 @@ fi
 if [ ! -d "${desc_path}" ]
 then
    mkdir ${desc_path}
+fi
+
+if [ ! -d "${renode_path}" ]
+then
+   mkdir ${renode_path}
 fi
 
 ##########################
@@ -97,11 +106,9 @@ mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 
 #copy static files to user's description folder
 cp ${task_path}/static/pwm.c ${desc_path}
-cp ${task_path}/static/STM32F3_FlashController.cs ${desc_path}
-cp ${task_path}/static/STM32F3_RCC.cs ${desc_path}
-cp ${task_path}/static/STM32F3_EXTI.cs ${desc_path}
-cp ${task_path}/static/stm32f334.repl ${desc_path}
-cp ${task_path}/static/stm32f334R8_nucleo.repl ${desc_path}
+
+ln -s $backend_interfaces_path/support_files/renode_stm32f3/ $renode_path
+
 
 #Configure CMakeLists file
 TASK_NAME=$task_name BACKEND_INTERFACES=$backend_interfaces_path envsubst '$BACKEND_INTERFACES, $TASK_NAME' <${task_path}/templates/CMakeLists.txt.in >${desc_path}/CMakeLists.txt
