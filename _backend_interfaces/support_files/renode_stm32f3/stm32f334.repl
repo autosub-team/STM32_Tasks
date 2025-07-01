@@ -13,13 +13,13 @@ flash_controller: MTD.STM32F3_FlashController @ {
     }
     flash: flash
 
-usart1: UART.STM32_UART @ sysbus <0x40013800, +0x100>
+usart1: UART.STM32F3_UART @ sysbus <0x40013800, +0x100>
     -> nvic@37
 
-usart2: UART.STM32_UART @ sysbus <0x40004400, +0x100>
+usart2: UART.STM32F3_UART @ sysbus <0x40004400, +0x100>
     -> nvic@38
 
-usart3: UART.STM32_UART @ sysbus <0x40004800, +0x100>
+usart3: UART.STM32F3_UART @ sysbus <0x40004800, +0x100>
     -> nvic@39
 
 can1: CAN.STMCAN @ sysbus <0x40006400, +0x400>

@@ -1,0 +1,34 @@
+:name: STM32F334R8
+:description: This script runs the example on stm32f334R8
+
+$name?="STM32F334R8"
+$bin_path?=$CWD/build/stm32-pwm.elf
+
+#Include custom STM32 HW
+i $CWD/renode/renode_stm32f3/STM32F3_RCC.cs
+i $CWD/renode/renode_stm32f3/STM32F3_FlashController.cs
+i $CWD/renode/renode_stm32f3/STM32F3_UART.cs
+i $CWD/renode/renode_stm32f3/STM32F3_EXTI.cs
+
+# Create Machine & Load config
+mach create $name
+machine LoadPlatformDescription $CWD/renode/renode_stm32f3/stm32f334R8_nucleo.repl
+
+# Create a terminal window showing the output of UART2
+showAnalyzer sysbus.usart2
+
+# Add Debug LED
+machine LoadPlatformDescriptionFromString "LED: Miscellaneous.LED @ gpioPortA 5"
+machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> LED@0 }"
+
+# Enable GDB
+#machine StartGdbServer 3333
+
+macro reset
+"""
+    sysbus LoadELF $bin_path
+"""
+
+runMacro $reset
+
+start

@@ -33,6 +33,7 @@ Test for correct Duty Cycle
 Create Nucleo Board
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_RCC.cs
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_EXTI.cs
+    Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_UART.cs
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_FlashController.cs
 
     Execute Command    $bin = @${CURDIR}/build/stm32-pwm.elf
