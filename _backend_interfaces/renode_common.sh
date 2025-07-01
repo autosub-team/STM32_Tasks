@@ -452,6 +452,7 @@ function run_renode {
 
 	if [ "$RET_timeout" -eq 1 ]
 	then
+		python3 $support_files_path/renode_result.py robot_output.xml error_msg
 		exit_and_save_results $FAILURE_SIM
 	fi
 
