@@ -6,6 +6,7 @@
 # description files to user folder
 #
 # Copyright (C) 2015 Martin  Mosbeck   <martin.mosbeck@gmx.at>
+# Copyright (C) 2025 Philipp-S. Vogt <philippvogt@gmx.at>
 # License GPL V2 or later (see http://www.gnu.org/licenses/gpl2.txt)
 ########################################################################
 
