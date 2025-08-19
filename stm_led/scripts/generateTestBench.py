@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ########################################################################
-# generateTestBench.py for VHDL task pwm
+# generateTestBench.py for STM32 task pwm
 # Generates testvectors and fills a testbench for specified taskParameters
 #
 # Copyright (C) 2015 Martin  Mosbeck   <martin.mosbeck@gmx.at>
@@ -9,7 +9,6 @@
 ########################################################################
 
 import sys
-import string
 import random
 
 from jinja2 import FileSystemLoader, Environment

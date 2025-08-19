@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ########################################################################
-# generator.sh for VHDL task pwm
+# generator.sh for STM32 task pwm
 # Generates the individual tasks, enters in databases and moves
 # description files to user folder
 #

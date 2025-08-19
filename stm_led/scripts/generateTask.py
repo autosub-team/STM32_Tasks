@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ########################################################################
-# generateTask.py for VHDL task pwm
+# generateTask.py for STM32 task pwm
 # Generates random tasks, generates TaskParameters, fill
 # entity and description templates
 #
@@ -10,8 +10,6 @@
 ########################################################################
 
 import random
-import math
-import string
 import sys
 
 from jinja2 import FileSystemLoader, Environment

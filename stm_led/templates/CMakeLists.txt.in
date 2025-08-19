@@ -27,5 +27,5 @@ target_link_libraries(stm32-$TASK_NAME
     CMSIS::STM32::F334R8
     STM32::NoSys 
 )
-#stm32_print_size_of_target(stm32-)
+stm32_generate_binary_file(stm32-$TASK_NAME)
 
