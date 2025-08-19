@@ -30,6 +30,11 @@ Test for correct Duty Cycle
     ${ht}=  Execute Command  gpioPortA.pt HighTicks
     ${hs}=  Ticks To Seconds  ${ht}
 
+    ${tim2_enabled}=  Execute Command  sysbus.timer2 Enabled
+    ${tim2_divider}=  Execute Command  sysbus.timer2 Divider
+    ${tim2_limit}=  Execute Command  sysbus.timer2 Limit
+    ${tim2_mode}=  Execute Command  gpioPortA ReadDoubleWord 0
+
 
 *** Keywords ***
 Create Nucleo Board
