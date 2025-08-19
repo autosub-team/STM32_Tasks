@@ -46,6 +46,8 @@ Create Nucleo Board
 
     Execute Command          machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortA 5"
     Execute Command          machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> pt@0 }"
+    # This line is needed to connect the CC channel to the correct pin.
+    Execute Command          machine LoadPlatformDescriptionFromString "timer2: { 0 -> gpioPortA@5 }"
 
     Execute Command    sysbus LoadELF $bin
 
