@@ -27,7 +27,7 @@ can1: CAN.STMCAN @ sysbus <0x40006400, +0x400>
 
 nvic: IRQControllers.NVIC @ sysbus 0xE000E000
     priorityMask: 0xF0
-    systickFrequency: 72000000
+    systickFrequency: 64000000
     IRQ -> cpu@0
 
 cpu: CPU.CortexM @ sysbus
@@ -119,7 +119,7 @@ timer1: Timers.STM32_Timer @ sysbus 0x40012C00
 
 timer2: Timers.STM32_Timer @ sysbus 0x40000000
     -> nvic@28
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFFFFFF
 
 timer3: Timers.STM32_Timer @ sysbus 0x40000400

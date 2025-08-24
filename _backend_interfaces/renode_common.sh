@@ -432,6 +432,7 @@ function run_renode {
 	renode-test ${testbench} -r renode
 	RET_timeout=$?
 
+
 	# check if simulation timed out:
 	if [ "$RET_timeout" -eq 124 ] # timeout exits 124 if it had to kill the process. Probably the simulation has crashed.
 	then

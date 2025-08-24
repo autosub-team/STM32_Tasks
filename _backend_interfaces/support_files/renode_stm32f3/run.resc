@@ -21,6 +21,10 @@ showAnalyzer sysbus.usart2
 machine LoadPlatformDescriptionFromString "LED: Miscellaneous.LED @ gpioPortA 5"
 machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> LED@0 }"
 
+# Add PWM tester, to see highticks, lowticks
+#machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortA 5"
+#machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> pt@0 }"
+
 # Enable GDB
 #machine StartGdbServer 3333
 
