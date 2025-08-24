@@ -110,11 +110,11 @@ rcc: Miscellaneous.STM32F3_RCC @ sysbus 0x40021000
 
 adc: Analog.STM32F3_ADC @ sysbus 0x50000000
     referenceVoltage: 3.3
-    externalEventFrequency: 1000000
+    externalEventFrequency: 64000000
 
 timer1: Timers.STM32_Timer @ sysbus 0x40012C00
     -> nvic@25
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer2: Timers.STM32_Timer @ sysbus 0x40000000
@@ -124,37 +124,37 @@ timer2: Timers.STM32_Timer @ sysbus 0x40000000
 
 timer3: Timers.STM32_Timer @ sysbus 0x40000400
     -> nvic@29
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer6: Timers.STM32_Timer @ sysbus 0x40001000
     -> nvic@30
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer7: Timers.STM32_Timer @ sysbus 0x40001400
     -> nvic@31
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer15: Timers.STM32_Timer @ sysbus 0x40014000
     -> nvic@32
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer16: Timers.STM32_Timer @ sysbus 0x40014400
     -> nvic@33
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 timer17: Timers.STM32_Timer @ sysbus 0x40014800
     -> nvic@34
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFF
 
 hrtim1: Timers.STM32_Timer @ sysbus 0x40017400
     -> nvic@35
-    frequency: 10000000
+    frequency: 64000000
     initialLimit: 0xFFFFFFFF
 
 bitbandPeripherals: Miscellaneous.BitBanding @ sysbus <0x42000000, +0x2000000>

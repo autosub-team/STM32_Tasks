@@ -10,6 +10,7 @@ Test Teardown       Test Teardown
 ${desired_period_clks}          {{PERIODCLKS}}
 ${desired_duty_cycle_clks}      {{DUTYCLKS}}
 ${simulation_cycles}            {{SIMCYCLES}}
+${percentage_tolerance}         1
 
 
 *** Test Cases ***
@@ -17,16 +18,22 @@ Test for correct Duty Cycle
     [Tags]    sels
     Create Nucleo Board
 
-    #Execute Command    sysbus SetHookBeforePeripheralWrite sysbus.gpioPortA "print 'Offset:', offset, ', Value:', value"
-
     Execute Command          gpioPortA.pt Reset
     Execute Command          pause
     Execute Command          emulation RunFor "5"
-    Start Emulation
+
     ${hp}=  Execute Command  gpioPortA.pt HighPercentage
+    ${actual_percent}=    Percentage To Number  ${hp}
+    ${expected_percent}=  Evaluate  ${desired_duty_cycle_clks} / ${desired_period_clks} * 100
+    Should Be Equal Within Range  ${expected_percent}  ${actual_percent}  ${percentage_tolerance}  "Duty Cycle out of range. Expected: ${expected_percent} vs Acutal: ${actual_percent}"
+
     ${ht}=  Execute Command  gpioPortA.pt HighTicks
-    ${hpn}=  Convert To Number  ${hp}
-    Should Be Equal Within Range  ${${desired_duty_cycle_clks} / ${desired_period_clks} * 100}  ${hpn}  1
+    ${hs}=  Ticks To Seconds  ${ht}
+
+    ${tim2_enabled}=  Execute Command  sysbus.timer2 Enabled
+    ${tim2_divider}=  Execute Command  sysbus.timer2 Divider
+    ${tim2_limit}=  Execute Command  sysbus.timer2 Limit
+    ${tim2_mode}=  Execute Command  gpioPortA ReadDoubleWord 0
 
 
 *** Keywords ***
@@ -44,12 +51,32 @@ Create Nucleo Board
 
     Execute Command          machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortA 5"
     Execute Command          machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> pt@0 }"
+    # This line is needed to connect the CC channel to the correct pin.
+    Execute Command          machine LoadPlatformDescriptionFromString "timer2: { 0 -> gpioPortA@5 }"
 
     Execute Command    sysbus LoadELF $bin
 
+Percentage To Number
+    [Arguments]              ${hp}
+    
+    ${hp}=  Remove String    ${hp}    \n
+    Should Not Be True           """${hp}""" == """NaN"""  msg="No change on pin detected."
+    #TODO(psv): decide if error message or set to 0
+    #${hp}=  Run Keyword if   """${hp}""" == """NaN"""  Evaluate  int(0)
+    ${hpn}=  Convert To Number  ${hp}
+    [Return]                 ${hpn}
+
+Ticks To Seconds
+    [Arguments]              ${ht}
+    
+    ${ht}=  Remove String    ${ht}    \n
+    #${ht}=  Run Keyword if   """${ht}""" == """NaN"""  Evaluate  int(0)
+    ${ht}=  Evaluate  int(${ht}) / (10**9)
+    [Return]                 ${ht}
+
 Should Be Equal Within Range
-    [Arguments]              ${value0}  ${value1}  ${range}
+    [Arguments]              ${value0}  ${value1}  ${range}  ${msg}
 
     ${diff}=                 Evaluate  abs(${value0} - ${value1})
 
-    Should Be True           ${diff} <= ${range}  msg="Duty Cycle out of range. Expected: ${value0} vs Acutal: ${value1}"
+    Should Be True           ${diff} <= ${range}  msg=${msg}

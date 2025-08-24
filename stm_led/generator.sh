@@ -1,11 +1,12 @@
 #!/bin/bash
 
 ########################################################################
-# generator.sh for VHDL task pwm
+# generator.sh for STM32 task pwm
 # Generates the individual tasks, enters in databases and moves
 # description files to user folder
 #
 # Copyright (C) 2015 Martin  Mosbeck   <martin.mosbeck@gmx.at>
+# Copyright (C) 2025 Philipp-S. Vogt <philippvogt@gmx.at>
 # License GPL V2 or later (see http://www.gnu.org/licenses/gpl2.txt)
 ########################################################################
 
@@ -109,16 +110,11 @@ cp ${task_path}/static/pwm.c ${desc_path}
 
 ln -s $backend_interfaces_path/support_files/renode_stm32f3/ $renode_path
 
-
 #Configure CMakeLists file
 TASK_NAME=$task_name BACKEND_INTERFACES=$backend_interfaces_path envsubst '$BACKEND_INTERFACES, $TASK_NAME' <${task_path}/templates/CMakeLists.txt.in >${desc_path}/CMakeLists.txt
 
 #for exam
-cp ${task_path}/exam/testbench_exam.vhdl ${desc_path}/pwm_tb_exam.vhdl
-
-############### ONLY FOR TESTING #################
-mv ${task_path}/tmp/solution_${user_id}_Task${task_nr}.txt ${desc_path}
-##################################################
+cp ${task_path}/exam/README.txt ${desc_path}/README.txt
 
 ##########################
 ##   EMAIL ATTACHMENTS  ##
@@ -130,7 +126,7 @@ if [ -n "${mode}" ];
 then
     if [ "${mode}" = "exam" ];
     then
-        task_attachments="${task_attachments_base} ${desc_path}/pwm_tb_exam.vhdl"
+        task_attachments="${task_attachments_base} ${desc_path}/README.txt"
     fi
 fi
 if [ -z "${mode}" ] || [ "${mode}" = "normal" ]; #default to normal

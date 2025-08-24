@@ -5,6 +5,7 @@
 #
 # Copyright (C) 2017 Martin  Mosbeck   <martin.mosbeck@gmx.at>
 #                    Gilbert Markum    < >
+# Copyright (C) 2025 Philipp-S. Vogt <philippvogt@gmx.at>
 # License GPL V2 or later (see http://www.gnu.org/licenses/gpl2.txt)
 ######################################################################################
 
@@ -43,18 +44,10 @@ generate_cmake_bin
 
 run_renode
 
-#taskfiles_analyze
-
-#userfiles_analyze
-
 if [ -n "${constraintfile}" ]
 then
 	source ${task_path}/${constraintfile}
 fi
-
-#elaborate
-
-#simulate
 
 # catch unhandled cases:
 cd ${user_task_path}

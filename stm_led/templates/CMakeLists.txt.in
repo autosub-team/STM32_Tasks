@@ -6,10 +6,8 @@ set(STM32_CUBE_F3_PATH $BACKEND_INTERFACES/support_files/STM32CubeF3)
 
 set(CMAKE_TOOLCHAIN_FILE $BACKEND_INTERFACES/support_files/stm32-cmake/cmake/stm32_gcc.cmake)
 
-project(stm32-ll C ASM)
+project(stm32-$TASK_NAME C ASM)
 set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
-
-
 
 find_package(CMSIS COMPONENTS STM32F3 REQUIRED)
 find_package(HAL COMPONENTS STM32F3 LL_RCC LL_GPIO LL_EXTI LL_TIM LL_USART LL_ADC LL_UTILS REQUIRED)
@@ -28,5 +26,5 @@ target_link_libraries(stm32-$TASK_NAME
     CMSIS::STM32::F334R8
     STM32::NoSys 
 )
-#stm32_print_size_of_target(stm32-)
+stm32_generate_binary_file(stm32-$TASK_NAME)
 
