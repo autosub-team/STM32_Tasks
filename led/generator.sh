@@ -88,12 +88,8 @@ fi
 #generate the description pdf and move it to user's description folder
 cd ${task_path}/tmp
 
-cp ${task_path}/templates/task_description/bib.bib .
-
-pdflatex desc_${user_id}_Task${task_nr}.tex >/dev/null
-biber desc_${user_id}_Task${task_nr}
 pdflatex -halt-on-error desc_${user_id}_Task${task_nr}.tex >/dev/null
-
+#python3 pdflatex.py desc_${user_id}_Task${task_nr}.tex #>/dev/null
 RET=$?
 zero=0
 if [ "$RET" -ne "$zero" ];

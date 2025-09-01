@@ -4,52 +4,41 @@
 \usetikzlibrary{calc}
 
 \usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+\usepackage{hyperref}
+\usepackage[backend=biber, style=ieee, citestyle=numeric-comp, url=false, doi=false, isbn=false]{biblatex}
+\usepackage{xurl}
+\addbibresource{bib.bib}
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
 
 \begin{document}
 \pagestyle{empty}
 \setlength{\parindent}{0em}
-\section*{PWM (Pulsweitenmodulation)}
+\section*{Task 1: LED Ansteuerung mittels PWM (Pulsweitenmodulation)}
 
-Ihre Aufgabe ist es, das Verhalten einer Entity  namens "`pwm"' zu programmieren. Die Entity ist in der angeh\"angten Datei "`pwm.vhdl"' deklariert und hat folgende Eigenschaften:
+Ihre Aufgabe ist es, die User LED auf dem Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Nutzen Sie hierzu das bereits vorbereitete file \enquote{pwm.c} und beachten sie außerdem die folgenden Vorgaben:
 
 \begin{itemize}
-\item Eingang:  CLK vom Typ std\_logic; dies ist ein rechteckiges Taktsignal mit 50 MHz (Periode $T_{CLK}$= 20 ns)
-\item Ausgang: O vom Typ std\_logic; dies ist der Port des Ausgangssignals
-\end{itemize}
-\begin{center}
-\begin{tikzpicture}
-\draw node [draw,rectangle, minimum height=15mm, minimum width=35mm,rounded corners=2mm,thick](entity){};
-\draw[->,thick] ($ (entity.west)-(10mm,0mm)$) -- ($ (entity.west) - (0mm,0mm)$);
-\draw node at ($ (entity.west)-(15mm,0mm)$){CLK};
-
-\draw[->,thick] (entity.east) -- ($ (entity.east) + (10mm,0)$);;
-\draw node at ($ (entity.east) + (12mm,0)$){O};
-
-\draw node at ($ (entity) - (0,12mm)$){pwm};
-
-\end{tikzpicture}
-\end{center}
-
-Ver\"andern sie die Datei "`pwm.vhdl"' nicht!\\
-
-Die Entity "`pwm"' soll ein pulsweitenmoduliertes Signal (PWM) aus einem Taktsignal (Eingangsport CLK) erzeugen und dabei folgende Eigenschaften erf\"ullen:
-\begin{itemize}
-\item Periode $T_{PWM}$ = {{PERIOD}}, Frequenz $f_{PWM}$= {{FRQ}}
+\item Periode mit der die LED blinken soll $T_{PWM}$ = {{PERIOD}}, Frequenz $f_{PWM}$= {{FRQ}}
 \item Tastverh\"altnis (duty cycle)  $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}
-\item Die Anfangsflanke des Signals soll konstant gehalten und die Endflanke entsprechend moduliert werden.
+\item Die Anfangsflanke (wechsel zu High) des Signals soll konstant gehalten und die Endflanke (wechsel zu Low) entsprechend moduliert werden.
 \end{itemize}
 \vspace{0.3cm}
 
-Programmieren Sie dieses Verhalten in der angeh\"angten Datei "`pwm\_beh.vhdl"'.
+Programmieren Sie dieses Verhalten in der angeh\"angten Datei \enquote{pwm.c}.
 \\
 
-Um auf einem FPGA korrekt synthetisiert werden zu k\"onnen, muss die Erzeugung des PWM Signals ohne die VHDL Constructs 'after' und 'wait' geschehen.
+Es sind die Capture/Compare Kanäle des spezifischen Timers der mit der User LED verbunden ist zu nutzen. Lösungen die etwaige delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
 \\
 
-Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff "`Result Task {{ TASKNR }}"' und Ihrer Datei "`pwm\_beh.vhdl"'  an {{ SUBMISSIONEMAIL }}.
+Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task {{ TASKNR }}} und Ihrer Datei \enquote{pwm.c}  an {{ SUBMISSIONEMAIL }}.
 
 \vspace{0.7cm}
 
 Viel Erfolg und m\"oge die Macht mit Ihnen sein.
+
+\printbibliography[heading=bibintoc]
 
 \end{document}
