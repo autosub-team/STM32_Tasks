@@ -1,5 +1,5 @@
 Chosen TaskParameters:
-Frequency:	1.6
-Duty:	64
-Pin:	PA5
-Timer/Channel:	TIM2_CH1
+Frequency:	0.5
+Duty:	46
+Pin:	PA6
+Timer/Channel:	TIM16_CH1

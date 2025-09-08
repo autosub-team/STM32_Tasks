@@ -1,5 +1,5 @@
 Chosen TaskParameters:
-Frequency:	2.0
-Duty:	10
-Pin:	PC7
+Frequency:	1.0
+Duty:	24
+Pin:	PA7
 Timer/Channel:	TIM3_CH2

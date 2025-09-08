@@ -1,7 +1,7 @@
 /* Task 1: LED PWM
 
-In this task, your goal is to utelize the PWM mode in a Timer, which is connected
-to the User Led on our Nucleo Board.
+In this task, your goal is to utilize the PWM mode in a Timer, which is connected
+to one of the LEDs on our Extension Board Board.
 
 Put relevant code for setting up the peripherals in their respective functions and
 put code to start relevant peripherals at the respective position in the code below

@@ -27,13 +27,15 @@ freqs_possible = [0.5, 0.8, 1, 1.6, 2]
 chosen_freq = freqs_possible[random.randrange(len(freqs_possible))] # choses random frequency from possible list
 
 # available pins and channels
-pin_channel_combinations = {"PA5":"TIM2_CH1", 
-                            "PA6":"TIM3_CH1",
-                            "PA7":"TIM3_CH2",
-                            "PC7":"TIM3_CH2"
-                            }
-pins_possible = ["PA5", "PA6", "PA7", "PC7"]
-chosen_pin = pins_possible[random.randrange(len(pins_possible))] # random pin chosen
+pin_channel_combinations = [("PA5", "TIM2_CH1"), # einzel-blau, user LED
+                            ("PA6", "TIM3_CH1"), # einzel-rot
+                            ("PA6", "TIM16_CH1"), # einzel-rot
+                            ("PA7", "TIM3_CH2"), # rgb rot
+                            ("PA7", "TIM17_CH1"), # rgb rot
+                            ("PC7", "TIM3_CH2"), # rgb grün
+                            ("PB6", "TIM16_CH1N") # rgb blau
+                            ]
+chosen_pin, chosen_channel = pin_channel_combinations[random.randrange(len(pin_channel_combinations))] # random pin chosen
 
 #duty between 10 and 90%
 chosen_duty=random.randrange(10,91) # excludes 91
@@ -41,7 +43,7 @@ chosen_duty=random.randrange(10,91) # excludes 91
 ##############################
 ## PARAMETER SPECIFYING TASK##
 ##############################
-taskParameters= f"{chosen_freq:.1f}#{chosen_duty}#{chosen_pin}#{pin_channel_combinations[chosen_pin]}"
+taskParameters= f"{chosen_freq:.1f}#{chosen_duty}#{chosen_pin}#{chosen_channel}"
 
 ############### ONLY FOR TESTING #######################
 filename ="tmp/solution_{0}_Task{1}.txt".format(userId,taskNr)
@@ -57,8 +59,15 @@ with open (filename, "w") as solution:
 # FRQ  Frequency
 # DUTY Duty Cycle
 # PIN pin
-paramsDesc.update({"FRQ":f"{chosen_freq:.1f}", "DUTY":f"{chosen_duty}", "PIN":chosen_pin})
+paramsDesc.update({"FRQ":f"{chosen_freq:.1f}", "DUTY":f"{chosen_duty}", "PIN":chosen_pin, "CHANNEL":chosen_channel})
 paramsDesc.update({"TASKNR":str(taskNr),"SUBMISSIONEMAIL":submissionEmail})
+
+if chosen_channel == "TIM16_CH1N":
+    msg = "Beachten Sie dass TIM16_CH1N ein komplementärer Kanal ist und daher im \\enquote{LL_TIM_OC_InitTypeDef}-struct die Einstellungen für \\enquote{OCNState} und \\enquote{OCNPolarity} zu setzen sind. Da wir jedoch nur diesen Kanal des TIM16 ansteuern, verhält er sich ansonsten wie ein gewöhnlicher Kanal.\n\\\\"
+    #"Be aware that TIM16_CH1N is a complementary channel and requires settings for the \\enquote\{OCNState\} and \\enquote\{OCNPolarity\} properties in the \\enquote\{LL_TIM_OC_InitTypeDef\}-struct. Since we only use the complementary channel, no other special procedure is required.\\\\"
+else:
+    msg = ""
+paramsDesc.update({"TIM_16_WARNING":msg})
 
 #############################
 # FILL DESCRIPTION TEMPLATE #

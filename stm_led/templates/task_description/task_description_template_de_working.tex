@@ -24,15 +24,12 @@ Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das N
 \item Frequenz mit der die LED blinken soll: $f_{PWM}$= {{FRQ}}\,Hz ($=\frac{1}{T_{PWM}}$)
 \item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}\,\%
 \item Anzusteuernder Pin (und damit festgelegte LED): {{PIN}}
-\item Zu nutzender Timer/Channel: {{CHANNEL}}
 \item Die Anfangsflanke (wechsel zu High) des Signals soll konstant gehalten und die Endflanke (wechsel zu Low) entsprechend moduliert werden.
 \end{itemize}
 \vspace{0.3cm}
 
-Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Lösungen die etwaige Delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
+Es ist entweder Timer 2 oder Timer 3 zu nutzen. Recherchieren Sie im Datenblatt \cite{data_sheet} welcher der Beiden der korrekte für Ihren Pin {{PIN}} ist. Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Den korrekten Channel finden sie ebenso im Datenblatt \cite{data_sheet}. Lösungen die etwaige Delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
 \\
-
-{{TIM_16_WARNING}}
 
 Programmieren Sie das obig definierte Verhalten in der angeh\"angten Datei \enquote{pwm.c}.
 \\

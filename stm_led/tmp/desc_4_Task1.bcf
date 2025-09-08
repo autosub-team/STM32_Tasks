@@ -2353,11 +2353,9 @@
     <bcf:citekey order="3">nucleo_manual</bcf:citekey>
     <bcf:citekey order="4">driver_manual</bcf:citekey>
     <bcf:citekey order="5">data_sheet</bcf:citekey>
-    <bcf:citekey order="6">data_sheet</bcf:citekey>
-    <bcf:citekey order="7">data_sheet</bcf:citekey>
-    <bcf:citekey order="8">ref_manual</bcf:citekey>
-    <bcf:citekey order="9">nucleo_manual</bcf:citekey>
-    <bcf:citekey order="10">driver_manual</bcf:citekey>
+    <bcf:citekey order="6">ref_manual</bcf:citekey>
+    <bcf:citekey order="7">nucleo_manual</bcf:citekey>
+    <bcf:citekey order="8">driver_manual</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

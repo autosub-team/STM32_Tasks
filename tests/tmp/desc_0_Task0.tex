@@ -18,20 +18,23 @@
 \setlength{\parindent}{0em}
 \section*{Task 1: LED Ansteuerung mittels PWM (Pulsweitenmodulation)}
 
-Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Greifen Sie hierzu auf die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual} zu. Verwenden Sie außerdem das bereits vorbereitete file \enquote{pwm.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
+Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem das bereits vorbereitete file \enquote{pwm.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
 
 \begin{itemize}
-\item Frequenz mit der die LED blinken soll: $f_{PWM}$= 1.6 ($=\frac{1}{T_{PWM}}$)
-\item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = 64
-\item Anzusteuernder Pin (und damit festgelegte LED): PA5
+\item Frequenz mit der die LED blinken soll: $f_{PWM}$= 0.5\,Hz ($=\frac{1}{T_{PWM}}$)
+\item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = 46\,\%
+\item Anzusteuernder Pin (und damit festgelegte LED): PA6
+\item Zu nutzender Timer/Channel: TIM16_CH1
 \item Die Anfangsflanke (wechsel zu High) des Signals soll konstant gehalten und die Endflanke (wechsel zu Low) entsprechend moduliert werden.
 \end{itemize}
 \vspace{0.3cm}
 
-Programmieren Sie dieses Verhalten in der angeh\"angten Datei \enquote{pwm.c}.
+Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Lösungen die etwaige Delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
 \\
 
-Es sind die Capture/Compare Kanäle des spezifischen Timers der mit dem vorgebenen Pin PA5 verbunden ist zu nutzen. Lösungen die etwaige delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
+
+
+Programmieren Sie das obig definierte Verhalten in der angeh\"angten Datei \enquote{pwm.c}.
 \\
 
 Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task 0} und Ihrer Datei \enquote{pwm.c}  an test@test.at.
