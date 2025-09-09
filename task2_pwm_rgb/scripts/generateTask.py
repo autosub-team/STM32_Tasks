@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ########################################################################
-# generateTask.py for STM32 task pwm with single led
+# generateTask.py for STM32 task pwm
 # Generates random tasks, generates TaskParameters, fill
 # entity and description templates
 #
@@ -27,18 +27,13 @@ freqs_possible = [0.5, 0.8, 1, 1.6, 2]
 chosen_freq = freqs_possible[random.randrange(len(freqs_possible))] # choses random frequency from possible list
 
 # available pins and channels
-pin_channel_combinations =  [("PA5", "TIM2_CH1"), # einzel-blau, user LED
-                             ("PA6", "TIM3_CH1"), # einzel-rot
-                             ("PA6", "TIM16_CH1"), # einzel-rot
-                             ("PA7", "TIM3_CH2"), # rgb rot
-                             ("PA7", "TIM17_CH1"), # rgb rot
-                             ("PC7", "TIM3_CH2"), # rgb grün
-                             #("PB6", "TIM16_CH1N") # rgb blau, not testable via renode as N channels are not implemented
-                            ]
-
-tmp = pin_channel_combinations[random.randrange(len(pin_channel_combinations))] # random pin chosen and channel
-chosen_pin = tmp[0]
-chosen_channel = tmp[1]
+pin_channel_combinations = {"PA5":"TIM2_CH1", 
+                            "PA6":"TIM3_CH1",
+                            "PA7":"TIM3_CH2",
+                            "PC7":"TIM3_CH2"
+                            }
+pins_possible = ["PA5", "PA6", "PA7", "PC7"]
+chosen_pin = pins_possible[random.randrange(len(pins_possible))] # random pin chosen
 
 #duty between 10 and 90%
 chosen_duty=random.randrange(10,91) # excludes 91
@@ -46,7 +41,7 @@ chosen_duty=random.randrange(10,91) # excludes 91
 ##############################
 ## PARAMETER SPECIFYING TASK##
 ##############################
-taskParameters= f"{chosen_freq:.1f}#{chosen_duty}#{chosen_pin}#{chosen_channel}"
+taskParameters= f"{chosen_freq:.1f}#{chosen_duty}#{chosen_pin}#{pin_channel_combinations[chosen_pin]}"
 
 ############### ONLY FOR TESTING #######################
 filename ="tmp/solution_{0}_Task{1}.txt".format(userId,taskNr)
@@ -62,7 +57,7 @@ with open (filename, "w") as solution:
 # FRQ  Frequency
 # DUTY Duty Cycle
 # PIN pin
-paramsDesc.update({"FRQ":f"{chosen_freq:.1f}", "DUTY":f"{chosen_duty}", "PIN":chosen_pin, "CHANNEL":chosen_channel.replace("_", "-")}) # underline causes error in latex
+paramsDesc.update({"FRQ":f"{chosen_freq:.1f}", "DUTY":f"{chosen_duty}", "PIN":chosen_pin})
 paramsDesc.update({"TASKNR":str(taskNr),"SUBMISSIONEMAIL":submissionEmail})
 
 #############################

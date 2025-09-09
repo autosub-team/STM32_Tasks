@@ -16,9 +16,9 @@
 \begin{document}
 \pagestyle{empty}
 \setlength{\parindent}{0em}
-\section*{Task 1: LED Ansteuerung mittels PWM (Pulsweitenmodulation)}
+\section*{Task {{TASKNR}}: Ansteuerung einer LED mittels PWM (Pulsweitenmodulation)}
 
-Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem das bereits vorbereitete file \enquote{pwm.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
+Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem das bereits vorbereitete file \enquote{pwm\_single\_led.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
 
 \begin{itemize}
 \item Frequenz mit der die LED blinken soll: $f_{PWM}$= {{FRQ}}\,Hz ($=\frac{1}{T_{PWM}}$)
@@ -32,12 +32,17 @@ Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das N
 Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Lösungen die etwaige Delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
 \\
 
-{{TIM_16_WARNING}}
+%\fbox{
+
+Die Timer 16 und 17 besitzen komplementäre (N) Kanäle, die zusammen mit den gewöhnlichen Kanälen und der Einführung einer Tod-Zeit für eine definierte Abfolge an z.B. Schaltsignalen zu sorgen. Deshalb muss bei diesen Timern ein weiteres bit (das MOE-bit) im TIMx\_BDTR gesetzt werden um einen Output zu generieren als erweiterte Sicherheitsmaßnahme. Verwenden Sie hierzu den Befehl \enquote{LL\_TIM\_EnableAllOutputs(TIMx)} sofern Sie einen der beiden Timer benutzen sollen und nachdem Sie den Timer konfiguriert haben.
+
+%}
+\\
 
 Programmieren Sie das obig definierte Verhalten in der angeh\"angten Datei \enquote{pwm.c}.
 \\
 
-Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task {{ TASKNR }}} und Ihrer Datei \enquote{pwm.c}  an {{ SUBMISSIONEMAIL }}.
+Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task {{ TASKNR }}} und Ihrer Datei \enquote{pwm\_single\_led.c}  an {{ SUBMISSIONEMAIL }}.
 
 \vspace{0.7cm}
 

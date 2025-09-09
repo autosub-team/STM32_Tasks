@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{a4wide}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+\usepackage{hyperref}
+\usepackage[backend=biber, style=ieee, citestyle=numeric-comp, url=false, doi=false, isbn=false]{biblatex}
+\usepackage{xurl}
+\addbibresource{bib.bib}
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+
+\begin{document}
+\pagestyle{empty}
+\setlength{\parindent}{0em}
+\section*{Task {{TASKNR}}: Controlling an LED using PWM (Pulse Width Modulation)}
+
+Your task is to control one of the available LEDs on the adapter board for the Nucleo board using the capture/compare modules of a timer. Use the information in the datasheet \cite{data_sheet} and reference manual \cite{ref_manual} of the STM32F334 as well as the user manual for the Nucleo-64 board \cite{nucleo_manual} and the description of the LL driver \cite{driver_manual}. Also use the already prepared file \enquote{pwm\_single\_led.c} and note the following specifications for your solution:
+
+\begin{itemize}
+\item Frequency at which the LED should blink: $f_{PWM}$= {{FRQ}}\,Hz ($=\frac{1}{T_{PWM}}$)
+\item Duty cycle: $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}\,\%
+\item Pin to be controlled (and thus the specified LED): {{PIN}}
+\item Timer/Channel to be used: {{CHANNEL}}
+\item The rising edge (change to High) of the signal should be kept constant and the falling edge (change to Low) should be modulated accordingly.
+\end{itemize}
+\vspace{0.3cm}
+
+The capture/compare channels of the specific timer must be used. Solutions that use any delays or interrupt routines will not be accepted as a solution.
+\\
+
+\fbox{\parbox{\linewidth}{Attention: Timers 16 and 17 have complementary (N) channels, which together with the regular channels and the introduction of a dead-time, ensure a defined sequence of e.g. switching signals. For this reason, with these timers, another bit (the MOE-bit) in the TIMx\_BDTR register must be set to generate an output. Use the command \enquote{LL\_TIM\_EnableAllOutputs(TIMx)} for this purpose if you are to use one of the two timers and after you have configured the timer.}}
+\\
+
+Program the above-defined behavior in the attached file \enquote{pwm\_single\_led.c}.
+\\
+
+To submit your solution, send an email with the subject \enquote{Result Task {{ TASKNR }}} and your file \enquote{pwm\_single\_led.c} to {{ SUBMISSIONEMAIL }}.
+
+\vspace{0.7cm}
+
+Good luck and may the force be with you.
+
+\newpage
+\printbibliography[heading=bibintoc]
+
+\end{document}

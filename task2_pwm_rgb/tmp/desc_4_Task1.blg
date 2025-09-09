@@ -1,0 +1,15 @@
+[0] Config.pm:307> INFO - This is Biber 2.17
+[0] Config.pm:310> INFO - Logfile is 'desc_4_Task1.blg'
+[156] biber:340> INFO - === Mon Sep  8, 2025, 13:21:48
+[182] Biber.pm:418> INFO - Reading 'desc_4_Task1.bcf'
+[278] Biber.pm:972> INFO - Found 4 citekeys in bib section 0
+[298] Biber.pm:4383> INFO - Processing section 0
+[395] Biber.pm:4574> INFO - Looking for bibtex file 'bib.bib' for section 0
+[396] bibtex.pm:1713> INFO - LaTeX decoding ...
+[403] bibtex.pm:1518> INFO - Found BibTeX data source 'bib.bib'
+[474] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'variable = shifted' with 'variable = non-ignorable'
+[474] UCollate.pm:68> INFO - Overriding locale 'de-DE' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[474] Biber.pm:4203> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'de-DE'
+[474] Biber.pm:4209> INFO - No sort tailoring available for locale 'de-DE'
+[477] bbl.pm:654> INFO - Writing 'desc_4_Task1.bbl' with encoding 'UTF-8'
+[478] bbl.pm:757> INFO - Output to desc_4_Task1.bbl

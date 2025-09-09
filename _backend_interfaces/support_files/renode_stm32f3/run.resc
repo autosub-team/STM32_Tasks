@@ -2,7 +2,7 @@
 :description: This script runs the example on stm32f334R8
 
 $name?="STM32F334R8"
-$bin_path?=$CWD/build/stm32-pwm.elf
+$bin_path?=$CWD/build/stm32-pwm_single_led.elf
 
 #Include custom STM32 HW
 i $CWD/renode/renode_stm32f3/STM32F3_RCC.cs
@@ -18,12 +18,12 @@ machine LoadPlatformDescription $CWD/renode/renode_stm32f3/stm32f334R8_nucleo.re
 showAnalyzer sysbus.usart2
 
 # Add Debug LED
-#machine LoadPlatformDescriptionFromString "LED: Miscellaneous.LED @ gpioPortA 5"
-#machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> LED@0 }"
+machine LoadPlatformDescriptionFromString "LED: Miscellaneous.LED @ gpioPortB 6"
+machine LoadPlatformDescriptionFromString "gpioPortB: { 6 -> LED@0 }"
 
 # Add PWM tester, to see highticks, lowticks
-machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortA 5"
-machine LoadPlatformDescriptionFromString "gpioPortA: { 5 -> pt@0 }"
+#machine LoadPlatformDescriptionFromString "pt: PWMTester @ gpioPortB 6"
+#machine LoadPlatformDescriptionFromString "gpioPortB: { 6 -> pt@0 }"
 
 # Enable GDB
 #machine StartGdbServer 3333

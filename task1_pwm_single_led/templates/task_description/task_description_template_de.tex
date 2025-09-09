@@ -16,15 +16,15 @@
 \begin{document}
 \pagestyle{empty}
 \setlength{\parindent}{0em}
-\section*{Task 0: Ansteuerung einer LED mittels PWM (Pulsweitenmodulation)}
+\section*{Task {{TASKNR}}: Ansteuerung einer LED mittels PWM (Pulsweitenmodulation)}
 
-Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem das bereits vorbereitete file \enquote{pwm\_single\_led.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
+Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem die bereits vorbereitete Datei \enquote{pwm\_single\_led.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
 
 \begin{itemize}
-\item Frequenz mit der die LED blinken soll: $f_{PWM}$= 0.5\,Hz ($=\frac{1}{T_{PWM}}$)
-\item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = 87\,\%
-\item Anzusteuernder Pin (und damit festgelegte LED): PA6
-\item Zu nutzender Timer/Channel: TIM16-CH1
+\item Frequenz mit der die LED blinken soll: $f_{PWM}$= {{FRQ}}\,Hz ($=\frac{1}{T_{PWM}}$)
+\item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}\,\%
+\item Anzusteuernder Pin (und damit festgelegte LED): {{PIN}}
+\item Zu nutzender Timer/Channel: {{CHANNEL}}
 \item Die Anfangsflanke (wechsel zu High) des Signals soll konstant gehalten und die Endflanke (wechsel zu Low) entsprechend moduliert werden.
 \end{itemize}
 \vspace{0.3cm}
@@ -38,7 +38,7 @@ Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Lösungen
 Programmieren Sie das obig definierte Verhalten in der angeh\"angten Datei \enquote{pwm\_single\_led.c}.
 \\
 
-Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task 0} und Ihrer Datei \enquote{pwm\_single\_led.c}  an test@test.at.
+Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task {{ TASKNR }}} und Ihrer Datei \enquote{pwm\_single\_led.c}  an {{ SUBMISSIONEMAIL }}.
 
 \vspace{0.7cm}
 

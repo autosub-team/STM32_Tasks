@@ -94,7 +94,7 @@ Create Nucleo Board
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_UART.cs
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_FlashController.cs
 
-    Execute Command    $bin = @${CURDIR}/build/stm32-pwm_single_led.elf
+    Execute Command    $bin = @${CURDIR}/build/stm32-pwm.elf
 
     Execute Command    using sysbus
     Execute Command    mach create "STM32F334R8-Nucleo"
