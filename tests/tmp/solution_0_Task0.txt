@@ -1,5 +1,0 @@
-Chosen TaskParameters:
-Frequency:	0.5
-Duty:	87
-Pin:	PA6
-Timer/Channel:	TIM16_CH1
