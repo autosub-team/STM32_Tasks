@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ########################################################################
-# generator.sh for STM32 task pwm
+# generator.sh for STM32 task pwm_rgb
 # Generates the individual tasks, enters in databases and moves
 # description files to user folder
 #
@@ -111,7 +111,7 @@ rm -f desc_${user_id}_Task${task_nr}.out
 mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 
 #copy static files to user's description folder
-cp ${task_path}/static/pwm.c ${desc_path}
+cp ${task_path}/static/pwm_rgb.c ${desc_path}
 
 ln -s $backend_interfaces_path/support_files/renode_stm32f3/ $renode_path
 

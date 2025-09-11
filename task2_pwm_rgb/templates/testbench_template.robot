@@ -1,3 +1,5 @@
+# Testbench for task2: pwm rgb -> since hardware is fixed, check implementation without randoms
+
 *** Settings ***
 Resource            ${RENODEKEYWORDS}
 
@@ -7,12 +9,12 @@ Test Teardown       Test Teardown
 
 
 *** Variables ***
-${desired_freq}                 {{FRQ}}
-${desired_duty_cycle}           {{DUTY}}
-${desired_pin}                  {{PIN}}
-${desired_tim_channel}          {{TIM_CHANNEL}}
-${simulation_cycles}            {{SIMCYCLES}}
-${percentage_tolerance}         1
+${desired_freq_tim3}                  {{FRQ_RED}}
+${desired_freq_tim17}                 {{FRQ_GREEN}}
+${desired_duty_cycle_tim3}            {{DUTY_RED}}
+${desired_duty_cycle_tim17}           {{DUTY_GREEN}}
+${simulation_cycles}                  {{SIMCYCLES}}
+${percentage_tolerance}               1
 
 
 *** Test Cases ***
@@ -25,29 +27,47 @@ Test for correct Implementation
     Execute Command          pause
     Execute Command          emulation RunFor "5"
 
-    ${GPIO_Clock_Enabled}=      Execute Command    sysbus.rcc ReadDoubleWord {{GPIO_clk_en_reg_offset}}
-    Verify Register Value        ${GPIO_Clock_Enabled}    ${ {{GPIO_clk_en_bit_shift}} }    ${ {{GPIO_clk_en_mask}} }    ${ {{GPIO_clk_en_comp_val}} }    "GPIOx's clock is not enabled!"
+    ${GPIO_Clock_Enabled}=      Execute Command    sysbus.rcc ReadDoubleWord 20
+    Verify Register Value        ${GPIO_Clock_Enabled}    ${17}    ${4}    ${4}    "GPIOA's or GPIOC's clock is not enabled!"
 
-    ${TIM_Clock_Enabled}=       Execute Command    sysbus.rcc ReadDoubleWord {{TIM_clk_en_reg_offset}}
-    Verify Register Value        ${TIM_Clock_Enabled}    ${ {{TIM_clk_en_bit_shift}} }    ${ {{TIM_clk_en_mask}} }    ${ {{TIM_clk_en_comp_val}} }    "TIMx's clock is not enabled!"
+    ${TIM3_Clock_Enabled}=       Execute Command    sysbus.rcc ReadDoubleWord 28
+    Verify Register Value        ${TIM3_Clock_Enabled}    ${1}    ${1}    ${1}    "TIM3's clock is not enabled!"
 
-    ${GPIO_mode}=               Execute Command    {{GPIO_PORT}} ReadDoubleWord {{GPIO_mode_reg_offset}}
-    Verify Register Value        ${GPIO_mode}    ${ {{GPIO_mode_bit_shift}} }    ${ {{GPIO_mode_mask}} }    ${ {{GPIO_mode_comp_val}} }    "GPIOx PINy is not configured for Alternate Function!"
+    ${TIM17_Clock_Enabled}=       Execute Command    sysbus.rcc ReadDoubleWord 24
+    Verify Register Value        ${TIM17_Clock_Enabled}    ${18}    ${1}    ${1}    "TIM17's clock is not enabled!"
+
+    ${GPIOA_mode}=               Execute Command    gpioPortA ReadDoubleWord 0
+    Verify Register Value        ${GPIOA_mode}    ${14}    ${3}    ${2}    "At least one of the PINs is not configured for Alternate Function!"
+
+    ${GPIOC_mode}=               Execute Command    gpioPortC ReadDoubleWord 0
+    Verify Register Value        ${GPIOC_mode}    ${14}    ${3}    ${2}    "At least one of the PINs is not configured for Alternate Function!"
     
-    ${GPIO_AF_fun}=             Execute Command    {{GPIO_PORT}} ReadDoubleWord {{GPIO_AF_reg_offset}}
-    Verify Register Value        ${GPIO_AF_fun}    ${ {{GPIO_AF_bit_shift}} }    ${ {{GPIO_AF_mask}} }    ${ {{GPIO_AF_comp_val}} }    "GPIOA Pin is not configured with the correct Alternate Function!"
+    ${GPIOA_AF_fun}=             Execute Command    gpioPortA ReadDoubleWord 32
+    Verify Register Value        ${GPIOA_AF_fun}    ${28}    ${15}    ${1}    "GPIOA Pin7 is not configured with the correct Alternate Function!"
+    
+    ${GPIOC_AF_fun}=             Execute Command    gpioPortC ReadDoubleWord 32
+    Verify Register Value        ${GPIOC_AF_fun}    ${28}    ${15}    ${2}    "GPIOC Pin7 is not configured with the correct Alternate Function!"
 
-    ${TIM_Control1}=            Execute Command    sysbus.timer{{TIM}} ReadDoubleWord {{TIM_control1_reg_offset}}
-    Verify Register Value        ${TIM_Control1}    ${ {{TIM_control1_bit_shift}} }    ${ {{TIM_control1_mask}} }    ${ {{TIM_control1_comp_val}} }    "Either counter not enabled or direction of counter is wrong!"
+    ${TIM3_Control1}=            Execute Command    sysbus.timer3 ReadDoubleWord 0
+    Verify Register Value        ${TIM3_Control1}    ${0}    ${17}    ${1}    "TIM3: Either counter not enabled or direction of counter is wrong!"
 
-    ${TIM_Mode}=                Execute Command    sysbus.timer{{TIM}} ReadDoubleWord {{TIM_mode_reg_offset}}
-    Verify Register Value        ${TIM_Mode}    ${ {{TIM_mode_bit_shift}} }    ${ {{TIM_mode_mask}} }    ${ {{TIM_mode_comp_val}} }    "Timer not configured in the correct mode!"
+    ${TIM17_Control1}=            Execute Command    sysbus.timer17 ReadDoubleWord 0
+    Verify Register Value        ${TIM17_Control1}    ${0}    ${1}    ${1}    "TIM17: Counter not enabled!"
 
-    ${TIM_OC_Pol_Enabled}=      Execute Command    sysbus.timer{{TIM}} ReadDoubleWord {{TIM_OC_pol_en_reg_offset}}
-    Verify Register Value        ${TIM_OC_Pol_Enabled}    ${ {{TIM_OC_pol_en_bit_shift}} }   ${ {{TIM_OC_pol_en_mask}} }    ${ {{TIM_OC_pol_en_comp_val}} }    "OC not enabled/wrong polarity!"
+    ${TIM3_Mode}=                Execute Command    sysbus.timer3 ReadDoubleWord 24
+    Verify Register Value        ${TIM3_Mode}    ${12}    ${4103}    ${6}    "Timer 3 not configured in the correct mode!"
+    
+    ${TIM17_Mode}=                Execute Command    sysbus.timer17 ReadDoubleWord 24
+    Verify Register Value        ${TIM17_Mode}    ${4}    ${4103}    ${6}    "Timer 17 not configured in the correct mode!"
+
+    ${TIM3_OC_Pol_Enabled}=      Execute Command    sysbus.timer3 ReadDoubleWord 32
+    Verify Register Value        ${TIM3_OC_Pol_Enabled}    ${4}   ${3}    ${1}    "TIM3: OC not enabled/wrong polarity!"
+
+    ${TIM17_OC_Pol_Enabled}=      Execute Command    sysbus.timer17 ReadDoubleWord 32
+    Verify Register Value        ${TIM17_OC_Pol_Enabled}    ${0}   ${3}    ${1}    "TIM17: OC not enabled/wrong polarity!"
 
 
-Test for correct Frequency
+Test for correct Frequency Timer 3
     [Tags]    sels
     [Documentation]    Verifies correct frequency via timer base frequency (64MHz), prescaler and auto-reload register value
     
@@ -55,36 +75,62 @@ Test for correct Frequency
     Execute Command          pause
     Execute Command          emulation RunFor "5"
 
-    ${prescaler}=    Execute Command    sysbus.timer{{TIM}} ReadDoubleWord {{PRESCALER_reg_offset}}
+    ${prescaler}=    Execute Command    sysbus.timer3 ReadDoubleWord 40
     ${prescaler}=    Convert to Integer    ${prescaler}
-    ${auto_reload}=    Execute Command    sysbus.timer{{TIM}} ReadDoubleWord {{ARR_reg_offset}}
+    ${auto_reload}=    Execute Command    sysbus.timer3 ReadDoubleWord 44
     ${auto_reload}=    Convert to Integer    ${auto_reload}
     ${actual_frequency}=    Evaluate    ${64000000} / (${prescaler} + 1) / (${auto_reload} + 1)
-    ${expected_frequency}=     Convert to Number    ${desired_freq}
-    Should Be Equal Within Range    ${expected_frequency}  ${actual_frequency}  ${0.1}  "Wrong Timer Frequency. Expected: ${expected_frequency} vs Acutal: ${actual_frequency}"
+    ${expected_frequency}=     Convert to Number    ${desired_freq_tim3}
+    Should Be Equal Within Range    ${expected_frequency}  ${actual_frequency}  ${0.1}  "Wrong Timer 3 Frequency. Expected: ${expected_frequency} vs Acutal: ${actual_frequency}"
 
 
-Test for correct Duty Cycle
+Test for correct Frequency Timer 17
+    [Tags]    sels
+    [Documentation]    Verifies correct frequency via timer base frequency (64MHz), prescaler and auto-reload register value
+    
+    Create Nucleo Board
+    Execute Command          pause
+    Execute Command          emulation RunFor "5"
+
+    ${prescaler}=    Execute Command    sysbus.timer17 ReadDoubleWord 40
+    ${prescaler}=    Convert to Integer    ${prescaler}
+    ${auto_reload}=    Execute Command    sysbus.timer17 ReadDoubleWord 44
+    ${auto_reload}=    Convert to Integer    ${auto_reload}
+    ${actual_frequency}=    Evaluate    ${64000000} / (${prescaler} + 1) / (${auto_reload} + 1)
+    ${expected_frequency}=     Convert to Number    ${desired_freq_tim17}
+    Should Be Equal Within Range    ${expected_frequency}  ${actual_frequency}  ${0.1}  "Wrong Timer 17 Frequency. Expected: ${expected_frequency} vs Acutal: ${actual_frequency}"
+
+
+Test for correct Duty Cycle Timer 3
     [Tags]    sels
     [Documentation]    Verifies correct duty cycle via renode pwm-tester (=pt)
     
     Create Nucleo Board
-    Execute Command          {{GPIO_PORT}}.pt Reset
+    Execute Command          gpioPortC.ptC Reset
     Execute Command          pause
     Execute Command          emulation RunFor "5"
 
-    ${hp}=  Execute Command  {{GPIO_PORT}}.pt HighPercentage
+    ${hp}=  Execute Command  gpioPortC.ptC HighPercentage
     ${actual_percent}=    Convert Duty Cycle    ${hp}
-    ${expected_percent}=    Convert to Integer    ${desired_duty_cycle}
-    Should Be Equal Within Range    ${expected_percent}  ${actual_percent}  ${percentage_tolerance}  "Duty Cycle out of range. Expected: ${expected_percent} vs Acutal: ${actual_percent}"
+    ${expected_percent}=    Convert to Integer    ${desired_duty_cycle_tim3}
+    Should Be Equal Within Range    ${expected_percent}  ${actual_percent}  ${percentage_tolerance}  "Duty Cycle timer 3 out of range. Expected: ${expected_percent} vs Acutal: ${actual_percent}"
 
-    # ${ht}=  Execute Command  {{GPIO_PORT}}.pt HighTicks
-    # ${hs}=  Ticks To Seconds  ${ht}
 
-    # ${tim2_enabled}=  Execute Command  sysbus.timer2 Enabled
-    # ${tim2_divider}=  Execute Command  sysbus.timer2 Divider
-    # ${tim2_limit}=  Execute Command  sysbus.timer2 Limit
-    # ${tim2_mode}=  Execute Command  {{GPIO_PORT}} ReadDoubleWord 0
+Test for correct Duty Cycle Timer 17
+    [Tags]    sels
+    [Documentation]    Verifies correct duty cycle via renode pwm-tester (=pt)
+    
+    Create Nucleo Board
+    Execute Command          gpioPortA.ptA Reset
+    Execute Command          pause
+    Execute Command          emulation RunFor "5"
+
+    ${hp}=  Execute Command  gpioPortA.ptA HighPercentage
+    ${actual_percent}=    Convert Duty Cycle    ${hp}
+    ${expected_percent}=    Convert to Integer    ${desired_duty_cycle_tim17}
+    Should Be Equal Within Range    ${expected_percent}  ${actual_percent}  ${percentage_tolerance}  "Duty Cycle timer 17 out of range. Expected: ${expected_percent} vs Acutal: ${actual_percent}"
+
+
 
 
 *** Keywords ***
@@ -94,16 +140,20 @@ Create Nucleo Board
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_UART.cs
     Execute Command    include @${CURDIR}/renode/renode_stm32f3/STM32F3_FlashController.cs
 
-    Execute Command    $bin = @${CURDIR}/build/stm32-pwm.elf
+    Execute Command    $bin = @${CURDIR}/build/stm32-pwm_rgb.elf
 
     Execute Command    using sysbus
     Execute Command    mach create "STM32F334R8-Nucleo"
     Execute Command    machine LoadPlatformDescription @${CURDIR}/renode/renode_stm32f3/stm32f334R8_nucleo.repl
 
-    Execute Command          machine LoadPlatformDescriptionFromString "pt: PWMTester @ {{GPIO_PORT}} {{GPIO_PIN}}"
-    Execute Command          machine LoadPlatformDescriptionFromString "{{GPIO_PORT}}: { {{GPIO_PIN}} -> pt@0 }"
+    Execute Command          machine LoadPlatformDescriptionFromString "ptA: PWMTester @ gpioPortA 7"
+    Execute Command          machine LoadPlatformDescriptionFromString "gpioPortA: { 7 -> ptA@0 }"
+
+    Execute Command          machine LoadPlatformDescriptionFromString "ptC: PWMTester @ gpioPortC 7"
+    Execute Command          machine LoadPlatformDescriptionFromString "gpioPortC: { 7 -> ptC@0 }"
     # This line is needed to connect the CC channel to the correct pin.
-    Execute Command          machine LoadPlatformDescriptionFromString "timer{{TIM}}: { {{CHANNEL}} -> {{GPIO_PORT}}@{{GPIO_PIN}} }"
+    Execute Command          machine LoadPlatformDescriptionFromString "timer3: { 1 -> gpioPortC@7 }"
+    Execute Command          machine LoadPlatformDescriptionFromString "timer17: { 0 -> gpioPortA@7 }"
 
     Execute Command    sysbus LoadELF $bin
 

@@ -1,0 +1,5 @@
+Chosen TaskParameters:
+Frequency_red:	32
+Duty_red:	19
+Frequency_green:	800
+Duty_green:	76

@@ -3,50 +3,58 @@
 \usepackage{tikz}
 \usetikzlibrary{calc}
 
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+\usepackage{hyperref}
+\usepackage[backend=biber, style=ieee, citestyle=numeric-comp, url=false, doi=false, isbn=false]{biblatex}
+\usepackage{xurl}
+\addbibresource{bib.bib}
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+
 \begin{document}
 \pagestyle{empty}
 \setlength{\parindent}{0em}
-\section*{PWM (Pulse-Width Modulation)}
-Your task is to program the behavior of an entity called "pwm". This entity is declared in the attached file "pwm.vhdl" and has the following properties:
+\section*{Task {{TASKNR}}: Controlling the RGB LED using PWM (Pulse Width Modulation)}
+
+Your task is to control the red and green channels of the RGB-LED on the adapter board for the Nucleo board using the capture/compare modules of two timers. Use the information in the datasheet \cite{data_sheet} and reference manual \cite{ref_manual} of the STM32F334 as well as the user manual for the Nucleo-64 board \cite{nucleo_manual} and the description of the LL driver \cite{driver_manual}. Also use the already prepared file \enquote{pwm\_rgb.c} and note the following specifications for your solution:
 
 \begin{itemize}
-\item Input:  CLK with type std\_logic; this is a square-wave clock signal at 50 MHz (period $T_{CLK}$= 20 ns)
-\item Output: O with type std\_logic; this is the port for the output signal
+\item Specifications for the red LED:
+\begin{itemize}
+\item Frequency: $f_{PWM, red}$= {{FRQred}}\,Hz ($=\frac{1}{T_{PWM_red}}$)
+\item Duty cycle: $\frac{T_{HIGH,red}}{T_{PWM,red}}$ = {{DUTYred}}\,\%
+\item Pin: PC7
+\item Timer/Channel: Timer 3, Channel 2
 \end{itemize}
-\begin{center}
-\begin{tikzpicture}
-\draw node [draw,rectangle, minimum height=15mm, minimum width=35mm,rounded corners=2mm,thick](entity){};
-\draw[->,thick] ($ (entity.west)-(10mm,0mm)$) -- ($ (entity.west) - (0mm,0mm)$);
-\draw node at ($ (entity.west)-(15mm,0mm)$){CLK};
-
-\draw[->,thick] (entity.east) -- ($ (entity.east) + (10mm,0)$);;
-\draw node at ($ (entity.east) + (12mm,0)$){O};
-
-\draw node at ($ (entity) - (0,12mm)$){pwm};
-
-\end{tikzpicture}
-\end{center}
-
-Do not change the file "pwm.vhdl".\\
-
-The "pwm" entity shall generate a PWM (Pulse-Width Modulation) signal from a clock signal (input port CLK) with the following constraints:
+\item Specifications for the green LED:
 \begin{itemize}
-\item Period $T_{PWM}$ = {{PERIOD}}, frequency $f_{PWM}$= {{FRQ}}
-\item Duty cycle $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}
-\item The signal lead edge has to be held fixed, the tail edge has to be modulated.
+\item Frequency: $f_{PWM, green}$= {{FRQgreen}}\,Hz ($=\frac{1}{T_{PWM_green}}$)
+\item Duty cycle: $\frac{T_{HIGH,green}}{T_{PWM,green}}$ = {{DUTYgreen}}\,\%
+\item Pin: PA7
+\item Timer/Channel: Timer 17, Channel 1
+\end{itemize}
+\item The rising edge (change to High) of the signals should be kept constant and the falling edge (change to Low) should be modulated accordingly.
 \end{itemize}
 \vspace{0.3cm}
 
-This behavior has to be programmed in the attached file "pwm\_beh.vhdl".
+The capture/compare channels of the specific timers must be used. Solutions that use any delays or interrupt routines will not be accepted as a solution.
 \\
 
-To be proper synthesize-able for a FPGA, the PWM signal generation has to be done without the VHDL constructs 'after' and 'wait'.
+\fbox{\parbox{\linewidth}{Attention: Timers 16 and 17 have complementary (N) channels, which together with the regular channels and the introduction of a dead-time, ensure a defined sequence of e.g. switching signals. For this reason, with these timers, another bit (the MOE-bit) in the TIMx\_BDTR register must be set to generate an output. Use the command \enquote{LL\_TIM\_EnableAllOutputs(TIMx)} for this purpose if you are to use one of the two timers and after you have configured the timer.}}
 \\
 
-To turn in your solution write an email to {{SUBMISSIONEMAIL}} with Subject "Result Task {{TASKNR}}" and attach your file "pwm\_beh.vhdl".
+Program the above-defined behavior in the attached file \enquote{pwm\_rgb.c}.
+\\
+
+To submit your solution, send an email with the subject \enquote{Result Task {{ TASKNR }}} and your file \enquote{pwm\_rgb.c} to {{ SUBMISSIONEMAIL }}.
 
 \vspace{0.7cm}
 
-Good Luck and May the Force be with you.
+Good luck and may the force be with you.
+
+\newpage
+\printbibliography[heading=bibintoc]
 
 \end{document}

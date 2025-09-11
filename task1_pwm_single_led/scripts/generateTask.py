@@ -23,7 +23,7 @@ language=sys.argv[4]
 paramsDesc={}
 
 # for task one, frequency between 0.5 and 2 Hz
-freqs_possible = [0.5, 0.8, 1, 1.6, 2]
+freqs_possible = [0.2, 0.5, 0.8, 1, 1.6, 2, 2.5, 3.2]
 chosen_freq = freqs_possible[random.randrange(len(freqs_possible))] # choses random frequency from possible list
 
 # available pins and channels
