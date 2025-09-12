@@ -1,3 +1,0 @@
-For TaskParameters: 26214412
-Period clocks: 100
-Duty clocks: 12
