@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.16)
+
+set(STM32_TOOLCHAIN_PATH $BACKEND_INTERFACES/support_files/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi)
+set(STM32_TARGET_TRIPLET arm-none-eabi)
+set(STM32_CUBE_F3_PATH $BACKEND_INTERFACES/support_files/STM32CubeF3)
+
+set(CMAKE_TOOLCHAIN_FILE $BACKEND_INTERFACES/support_files/stm32-cmake/cmake/stm32_gcc.cmake)
+
+project(stm32-$TASK_NAME C ASM)
+set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+
+find_package(CMSIS COMPONENTS STM32F3 REQUIRED)
+find_package(HAL COMPONENTS STM32F3 LL_RCC LL_GPIO LL_EXTI LL_TIM LL_USART LL_ADC LL_UTILS REQUIRED)
+
+# STM32F334R8
+add_executable(stm32-$TASK_NAME $TASK_NAME.c)
+target_compile_definitions(stm32-$TASK_NAME PRIVATE USE_FULL_LL_DRIVER)
+target_link_libraries(stm32-$TASK_NAME
+    HAL::STM32::F3::LL_RCC
+    HAL::STM32::F3::LL_GPIO
+    HAL::STM32::F3::LL_EXTI
+    HAL::STM32::F3::LL_TIM
+    HAL::STM32::F3::LL_USART
+    HAL::STM32::F3::LL_ADC
+    HAL::STM32::F3::LL_UTILS
+    CMSIS::STM32::F334R8
+    STM32::NoSys 
+)
+stm32_generate_binary_file(stm32-$TASK_NAME)
+

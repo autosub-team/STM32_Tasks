@@ -1,0 +1,50 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{a4wide}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage[ngerman]{babel}
+\usepackage{csquotes}
+
+\usepackage{hyperref}
+\usepackage[backend=biber, style=ieee, citestyle=numeric-comp, url=false, doi=false, isbn=false]{biblatex}
+\usepackage{xurl}
+\addbibresource{bib.bib}
+\AtEveryBibitem{\clearfield{month}}
+\AtEveryBibitem{\clearfield{day}}
+
+\begin{document}
+\pagestyle{empty}
+\setlength{\parindent}{0em}
+\section*{Task {{TASKNR}}: Ansteuerung einer LED mittels PWM (Pulsweitenmodulation)}
+
+Ihre Aufgabe ist es, eine der verfügbaren LEDs auf dem Adapter Board für das Nucleo Board über die Capture/Compare Module eines Timers zu steuern. Nutzen Sie hierzu die Informationen im Datenblatt \cite{data_sheet} und Reference Manual \cite{ref_manual} des STM32F334 sowie das User Manual für das Nucleo-64 Board \cite{nucleo_manual} und die Beschreibung der LL Driver \cite{driver_manual}. Verwenden Sie außerdem die bereits vorbereitete Datei \enquote{pwm\_single\_led.c} und beachten sie die folgenden Vorgaben für Ihre Lösung:
+
+\begin{itemize}
+\item Frequenz mit der die LED blinken soll: $f_{PWM}$= {{FRQ}}\,Hz ($=\frac{1}{T_{PWM}}$)
+\item Tastverh\"altnis (duty cycle):  $\frac{T_{HIGH}}{T_{PWM}}$ = {{DUTY}}\,\%
+\item Anzusteuernder Pin (und damit festgelegte LED): {{PIN}}
+\item Zu nutzender Timer/Channel: {{CHANNEL}}
+\item Die Anfangsflanke (wechsel zu High) des Signals soll konstant gehalten und die Endflanke (wechsel zu Low) entsprechend moduliert werden.
+\end{itemize}
+\vspace{0.3cm}
+
+Es sind die Capture/Compare Kanäle des spezifischen Timers zu nutzen. Lösungen die etwaige Delays oder Interrupt Routinen nutzen werden nicht als Lösung akzeptiert.
+\\
+
+\fbox{\parbox{\linewidth}{Achtung: Die Timer 16 und 17 besitzen komplementäre (N) Kanäle, die zusammen mit den gewöhnlichen Kanälen und der Einführung einer Tod-Zeit für eine definierte Abfolge an z.B. Schaltsignalen sorgen. Deshalb muss bei diesen Timern ein weiteres bit (das MOE-bit) im TIMx\_BDTR Register gesetzt werden um einen Output zu generieren. Verwenden Sie hierzu den Befehl \enquote{LL\_TIM\_EnableAllOutputs(TIMx)} sofern Sie einen der beiden Timer benutzen sollen und nachdem Sie den Timer konfiguriert haben.}}
+\\
+
+Programmieren Sie das obig definierte Verhalten in der angeh\"angten Datei \enquote{pwm\_single\_led.c}.
+\\
+
+Um Ihre L\"osung abzugeben, senden Sie ein E-Mail mit dem Betreff \enquote{Result Task {{ TASKNR }}} und Ihrer Datei \enquote{pwm\_single\_led.c}  an {{ SUBMISSIONEMAIL }}.
+
+\vspace{0.7cm}
+
+Viel Erfolg und m\"oge die Macht mit Ihnen sein.
+
+\newpage
+\printbibliography[heading=bibintoc]
+
+\end{document}

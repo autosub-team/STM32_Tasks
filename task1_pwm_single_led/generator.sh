@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ########################################################################
-# generator.sh for STM32 task pwm
+# generator.sh for STM32 task1 single led with pwm
 # Generates the individual tasks, enters in databases and moves
 # description files to user folder
 #
@@ -88,7 +88,12 @@ fi
 #generate the description pdf and move it to user's description folder
 cd ${task_path}/tmp
 
+cp ${task_path}/templates/task_description/bib.bib .
+
+pdflatex desc_${user_id}_Task${task_nr}.tex >/dev/null
+biber desc_${user_id}_Task${task_nr}
 pdflatex -halt-on-error desc_${user_id}_Task${task_nr}.tex >/dev/null
+
 RET=$?
 zero=0
 if [ "$RET" -ne "$zero" ];
@@ -106,7 +111,7 @@ rm -f desc_${user_id}_Task${task_nr}.out
 mv ${task_path}/tmp/desc_${user_id}_Task${task_nr}.pdf ${desc_path}
 
 #copy static files to user's description folder
-cp ${task_path}/static/pwm.c ${desc_path}
+cp ${task_path}/static/pwm_single_led.c ${desc_path}
 
 ln -s $backend_interfaces_path/support_files/renode_stm32f3/ $renode_path
 
@@ -120,7 +125,7 @@ cp ${task_path}/exam/README.txt ${desc_path}/README.txt
 ##   EMAIL ATTACHMENTS  ##
 ##########################
 task_attachments=""
-task_attachments_base="${desc_path}/desc_${user_id}_Task${task_nr}.pdf ${desc_path}/pwm.c"
+task_attachments_base="${desc_path}/desc_${user_id}_Task${task_nr}.pdf ${desc_path}/pwm_single_led.c"
 
 if [ -n "${mode}" ];
 then
